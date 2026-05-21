@@ -1,3 +1,5 @@
+using Microsoft.EntityFrameworkCore;
+
 namespace AccountingService
 {
     public partial class Form1 : Form
