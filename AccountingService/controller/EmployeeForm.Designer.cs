@@ -28,22 +28,24 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             label1 = new Label();
             label2 = new Label();
             referenceTypeComboBox = new ComboBox();
-            customTypeTextBox = new TextBox();
             label3 = new Label();
             copiesCountNumericUpDown = new NumericUpDown();
             label4 = new Label();
             reasonTextBox = new TextBox();
             sendRequestButton = new Button();
             label5 = new Label();
-            RequestsDataGridView = new DataGridView();
+            requestsDataGridView = new DataGridView();
+            customTypeTextBox = new TextBox();
+            errorLabel = new Label();
+            refreshButton = new Button();
             ((System.ComponentModel.ISupportInitialize)copiesCountNumericUpDown).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)RequestsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)requestsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // label1
@@ -67,19 +69,14 @@
             // 
             // referenceTypeComboBox
             // 
+            referenceTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             referenceTypeComboBox.FormattingEnabled = true;
             referenceTypeComboBox.Items.AddRange(new object[] { "2-НДФЛ", "О месте работы и стаже", "О среднем заработке", "Произвольного типа" });
             referenceTypeComboBox.Location = new Point(12, 57);
             referenceTypeComboBox.Name = "referenceTypeComboBox";
             referenceTypeComboBox.Size = new Size(165, 23);
             referenceTypeComboBox.TabIndex = 2;
-            // 
-            // customTypeTextBox
-            // 
-            customTypeTextBox.Location = new Point(12, 86);
-            customTypeTextBox.Name = "customTypeTextBox";
-            customTypeTextBox.Size = new Size(165, 23);
-            customTypeTextBox.TabIndex = 3;
+            referenceTypeComboBox.SelectedIndexChanged += ReferenceTypeComboBox_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -93,9 +90,12 @@
             // copiesCountNumericUpDown
             // 
             copiesCountNumericUpDown.Location = new Point(199, 58);
+            copiesCountNumericUpDown.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             copiesCountNumericUpDown.Name = "copiesCountNumericUpDown";
+            copiesCountNumericUpDown.ReadOnly = true;
             copiesCountNumericUpDown.Size = new Size(109, 23);
             copiesCountNumericUpDown.TabIndex = 5;
+            copiesCountNumericUpDown.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // label4
             // 
@@ -121,6 +121,7 @@
             sendRequestButton.TabIndex = 8;
             sendRequestButton.Text = "Отправить запрос";
             sendRequestButton.UseVisualStyleBackColor = true;
+            sendRequestButton.Click += SendRequestButton_Click;
             // 
             // label5
             // 
@@ -132,44 +133,73 @@
             label5.TabIndex = 9;
             label5.Text = "Запросы";
             // 
-            // RequestsDataGridView
+            // requestsDataGridView
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            RequestsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
-            RequestsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle5.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            RequestsDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
-            RequestsDataGridView.Location = new Point(12, 172);
-            RequestsDataGridView.Name = "RequestsDataGridView";
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            dataGridViewCellStyle6.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            RequestsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            RequestsDataGridView.Size = new Size(776, 266);
-            RequestsDataGridView.TabIndex = 10;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Control;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            requestsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            requestsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            requestsDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            requestsDataGridView.Location = new Point(12, 172);
+            requestsDataGridView.Name = "requestsDataGridView";
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = SystemColors.Control;
+            dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            requestsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            requestsDataGridView.Size = new Size(776, 266);
+            requestsDataGridView.TabIndex = 10;
+            // 
+            // customTypeTextBox
+            // 
+            customTypeTextBox.Enabled = false;
+            customTypeTextBox.Location = new Point(12, 86);
+            customTypeTextBox.Name = "customTypeTextBox";
+            customTypeTextBox.Size = new Size(165, 23);
+            customTypeTextBox.TabIndex = 3;
+            // 
+            // errorLabel
+            // 
+            errorLabel.AutoSize = true;
+            errorLabel.ForeColor = Color.Red;
+            errorLabel.Location = new Point(297, 94);
+            errorLabel.Name = "errorLabel";
+            errorLabel.Size = new Size(0, 15);
+            errorLabel.TabIndex = 11;
+            // 
+            // refreshButton
+            // 
+            refreshButton.Location = new Point(12, 143);
+            refreshButton.Name = "refreshButton";
+            refreshButton.Size = new Size(75, 23);
+            refreshButton.TabIndex = 12;
+            refreshButton.Text = "Обновить";
+            refreshButton.UseVisualStyleBackColor = true;
+            refreshButton.Click += RefreshButton_Click;
             // 
             // EmployeeForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(RequestsDataGridView);
+            Controls.Add(refreshButton);
+            Controls.Add(errorLabel);
+            Controls.Add(requestsDataGridView);
             Controls.Add(label5);
             Controls.Add(sendRequestButton);
             Controls.Add(reasonTextBox);
@@ -184,7 +214,7 @@
             Name = "EmployeeForm";
             Text = "EmployeeForm";
             ((System.ComponentModel.ISupportInitialize)copiesCountNumericUpDown).EndInit();
-            ((System.ComponentModel.ISupportInitialize)RequestsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)requestsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -194,13 +224,15 @@
         private Label label1;
         private Label label2;
         private ComboBox referenceTypeComboBox;
-        private TextBox customTypeTextBox;
         private Label label3;
         private NumericUpDown copiesCountNumericUpDown;
         private Label label4;
         private TextBox reasonTextBox;
         private Button sendRequestButton;
         private Label label5;
-        private DataGridView RequestsDataGridView;
+        private DataGridView requestsDataGridView;
+        private TextBox customTypeTextBox;
+        private Label errorLabel;
+        private Button refreshButton;
     }
 }

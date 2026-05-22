@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            RequestsDataGridView = new DataGridView();
+            requestsDataGridView = new DataGridView();
             label1 = new Label();
             statusComboBox = new ComboBox();
             changeStatusButton = new Button();
-            ((System.ComponentModel.ISupportInitialize)RequestsDataGridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)requestsDataGridView).BeginInit();
             SuspendLayout();
             // 
-            // RequestsDataGridView
+            // requestsDataGridView
             // 
-            RequestsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            RequestsDataGridView.Location = new Point(12, 97);
-            RequestsDataGridView.Name = "RequestsDataGridView";
-            RequestsDataGridView.Size = new Size(776, 341);
-            RequestsDataGridView.TabIndex = 0;
+            requestsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            requestsDataGridView.Location = new Point(12, 97);
+            requestsDataGridView.Name = "requestsDataGridView";
+            requestsDataGridView.Size = new Size(776, 341);
+            requestsDataGridView.TabIndex = 0;
             // 
             // label1
             // 
@@ -78,17 +78,17 @@
             Controls.Add(changeStatusButton);
             Controls.Add(statusComboBox);
             Controls.Add(label1);
-            Controls.Add(RequestsDataGridView);
+            Controls.Add(requestsDataGridView);
             Name = "AccountantForm";
             Text = "AccountantForm";
-            ((System.ComponentModel.ISupportInitialize)RequestsDataGridView).EndInit();
+            ((System.ComponentModel.ISupportInitialize)requestsDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private DataGridView RequestsDataGridView;
+        private DataGridView requestsDataGridView;
         private Label label1;
         private ComboBox statusComboBox;
         private Button changeStatusButton;

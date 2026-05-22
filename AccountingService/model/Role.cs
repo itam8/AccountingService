@@ -4,9 +4,9 @@ using System.Text;
 
 namespace AccountingService.model
 {
-    enum Role
+    public static class Role
     {
-        Accountant,
-        Employee
+        public const string ACCOUNTANT = "Бухгалтер";
+        public const string EMPLOYEE = "Сотрудник";
     }
 }

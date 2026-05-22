@@ -4,7 +4,7 @@ using System.Configuration;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace AccountingService
+namespace AccountingService.helper
 {
     public static class PasswordHelper
     {

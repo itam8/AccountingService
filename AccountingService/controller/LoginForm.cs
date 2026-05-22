@@ -1,4 +1,6 @@
 using AccountingService.config;
+using AccountingService.context;
+using AccountingService.helper;
 using AccountingService.model;
 using AccountingService.repository;
 using Microsoft.EntityFrameworkCore;
@@ -28,13 +30,15 @@ namespace AccountingService
 
             if (user != null && user.Password == passwordHash)
             {
-                if (user.Role == Role.Accountant.ToString())
+                ControllerContext.User = user;
+
+                if (user.Role == Role.ACCOUNTANT)
                     OpenForm(new AccountantForm());
                 else
                     OpenForm(new EmployeeForm());
             }
             else
-                ShowError();
+                MessageDisplayHelper.ShowMessage(errorLabel, "Неверный логин или пароль");
         }
 
         private void OpenForm(Form form)
@@ -42,11 +46,6 @@ namespace AccountingService
             Hide();
             form.ShowDialog(this);
             Close();
-        }
-
-        private void ShowError()
-        {
-            errorLabel.Text = "Неверный логин или пароль";
         }
     }
 }

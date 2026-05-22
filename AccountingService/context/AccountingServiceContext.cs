@@ -1,4 +1,5 @@
-﻿using AccountingService.model;
+﻿using AccountingService.config;
+using AccountingService.model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic.Logging;
 using System;
@@ -8,7 +9,7 @@ using System.Drawing.Drawing2D;
 using System.Text;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
-namespace AccountingService.config
+namespace AccountingService.context
 {
     public class AccountingServiceContext : DbContext
     {
