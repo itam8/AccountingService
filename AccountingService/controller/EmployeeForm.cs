@@ -28,7 +28,7 @@ namespace AccountingService
 
         private void LoadDataGridView()
         {
-            requestsDataGridView.DataSource = RequestRepository.FindAllByUser(ControllerContext.User);
+            requestsDataGridView.DataSource = RequestRepository.FindAllByUser(ControllerContext.User.Id);
         }
 
         private void ReferenceTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
@@ -56,8 +56,28 @@ namespace AccountingService
                     Reason = reasonTextBox.Text,
                     Status = Status.SENT
                 };
-                RequestRepository.Create(request);
+                CreateRequest(request);
             }
+        }
+
+        private void CreateRequest(Request request)
+        {
+            var lastRequest = RequestRepository.FindByUserIdAndReferenceType(request.UserId, request.ReferenceType);
+            if (lastRequest != null)
+            {
+                var dialogResult = MessageBox.Show(
+                    $"Вы уже запрашивали такую справку {lastRequest.Date}\nЗапросить заново?",
+                    "",
+                    MessageBoxButtons.YesNo,
+                    MessageBoxIcon.Information,
+                    MessageBoxDefaultButton.Button2,
+                    MessageBoxOptions.DefaultDesktopOnly);
+
+                if (dialogResult == DialogResult.No)
+                    return;
+            }
+
+            RequestRepository.Create(request);
         }
 
         private void RefreshButton_Click(object sender, EventArgs e)

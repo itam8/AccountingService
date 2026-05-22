@@ -154,6 +154,7 @@
             requestsDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             requestsDataGridView.Location = new Point(12, 172);
             requestsDataGridView.Name = "requestsDataGridView";
+            requestsDataGridView.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Control;
             dataGridViewCellStyle3.Font = new Font("Segoe UI", 9F);

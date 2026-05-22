@@ -32,14 +32,21 @@
             label1 = new Label();
             statusComboBox = new ComboBox();
             changeStatusButton = new Button();
+            refreshButton = new Button();
             ((System.ComponentModel.ISupportInitialize)requestsDataGridView).BeginInit();
             SuspendLayout();
             // 
             // requestsDataGridView
             // 
+            requestsDataGridView.AllowUserToAddRows = false;
+            requestsDataGridView.AllowUserToDeleteRows = false;
+            requestsDataGridView.AllowUserToOrderColumns = true;
             requestsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             requestsDataGridView.Location = new Point(12, 97);
+            requestsDataGridView.MultiSelect = false;
             requestsDataGridView.Name = "requestsDataGridView";
+            requestsDataGridView.ReadOnly = true;
+            requestsDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             requestsDataGridView.Size = new Size(776, 341);
             requestsDataGridView.TabIndex = 0;
             // 
@@ -54,6 +61,7 @@
             // 
             // statusComboBox
             // 
+            statusComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             statusComboBox.FormattingEnabled = true;
             statusComboBox.Items.AddRange(new object[] { "Отправлено", "В процессе", "Готово" });
             statusComboBox.Location = new Point(61, 22);
@@ -69,12 +77,24 @@
             changeStatusButton.TabIndex = 3;
             changeStatusButton.Text = "Изменить статус";
             changeStatusButton.UseVisualStyleBackColor = true;
+            changeStatusButton.Click += ChangeStatusButton_Click;
+            // 
+            // refreshButton
+            // 
+            refreshButton.Location = new Point(12, 68);
+            refreshButton.Name = "refreshButton";
+            refreshButton.Size = new Size(75, 23);
+            refreshButton.TabIndex = 4;
+            refreshButton.Text = "Обновить";
+            refreshButton.UseVisualStyleBackColor = true;
+            refreshButton.Click += RefreshButton_Click;
             // 
             // AccountantForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(refreshButton);
             Controls.Add(changeStatusButton);
             Controls.Add(statusComboBox);
             Controls.Add(label1);
@@ -92,5 +112,6 @@
         private Label label1;
         private ComboBox statusComboBox;
         private Button changeStatusButton;
+        private Button refreshButton;
     }
 }
