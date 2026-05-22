@@ -1,10 +1,11 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using AccountingService.model;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace AccountingService
+namespace AccountingService.config
 {
     public class RequestConfiguration : IEntityTypeConfiguration<Request>
     {
