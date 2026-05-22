@@ -20,7 +20,7 @@ namespace AccountingService.repository
         public static List<AccounantRequest> JoinUsersAndRequests()
         {
             using var db = new AccountingServiceContext();
-            return db.Requests.OrderBy(r => r.Date).Join(
+            return db.Requests.OrderByDescending(r => r.Date).Join(
                 db.Users,
                 r => r.UserId,
                 u => u.Id,
@@ -41,7 +41,7 @@ namespace AccountingService.repository
         {
             using var db = new AccountingServiceContext();
             return db.Requests
-                .OrderBy(r => r.Date)
+                .OrderByDescending(r => r.Date)
                 .FirstOrDefault(r => r.UserId == userId && r.ReferenceType == referenceType);
         }
 
